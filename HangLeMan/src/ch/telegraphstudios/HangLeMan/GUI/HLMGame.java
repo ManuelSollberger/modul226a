@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import ch.telegraphstudios.HangLeMan.HangLeManMain;
+import ch.telegraphstudios.HangLeMan.Settings;
 import ch.telegraphstudios.HangLeMan.Utils.Utils;
 
 /**
@@ -39,6 +40,8 @@ public class HLMGame extends JPanel implements Renderable, KeyListener {
 	
 	private HLMPodest podest;
 	
+	HLMSettings settings;
+	
 	HLMToolbar toolbar;
 	
 	public String generatedWord;
@@ -57,6 +60,10 @@ public class HLMGame extends JPanel implements Renderable, KeyListener {
 		this.children.add(podest);
 		
 		this.addKeyListener(this);
+
+		//Get the settings instance and add it to this component.
+		this.settings = HLMSettings.getInstance(this);
+		this.add(this.settings);
 		
 		this.wordLabel.setBounds(BORDER_DISTANCE, (int)(HangLeManMain.GAME_HEIGHT * 0.25), HangLeManMain.GAME_WIDTH / 2 - BORDER_DISTANCE, (int)(HangLeManMain.GAME_HEIGHT * 0.75));
 		this.wordLabel.setFont(new Font("Consolas", Font.PLAIN, 30));
@@ -78,6 +85,9 @@ public class HLMGame extends JPanel implements Renderable, KeyListener {
 		this.divider.setBackground(Color.BLACK);
 		this.add(this.divider);
 		
+		//Load the words from the settings
+		this.settings.loadWords();
+		
 		this.restart();
 	}
 	
@@ -88,9 +98,12 @@ public class HLMGame extends JPanel implements Renderable, KeyListener {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		
-		//Start the rendering tree.
-		this.render(g);
+
+		//If not in the settings screen,
+		if (!this.settings.isVisible()) {
+			//Start the rendering tree.
+			this.render(g);
+		}
 	}
 
 	@Override
@@ -137,8 +150,8 @@ public class HLMGame extends JPanel implements Renderable, KeyListener {
 	 * Generate and clean a word.
 	 */
 	private void generateWord() {
-		String words = Utils.getWebPageContent("https://de.wikipedia.org/wiki/Schweiz");
-		words = Utils.stripTags(words.substring(4000, 5000));
+		/*String words = "Schweiz französisch Suisse italienisch Svizzera rätoromanisch Helvetia Schweizerische Eidgenossenschaft französisch Confédération suisse italienisch Confederazione Svizzera, rätoromanisch Confederaziun svizra lateinisch Confoederatio Helvetica föderalistischer demokratischer Staat Europa deutsche französische italienische rätoromanische Kulturgebiete Willensnation zusammenleben Schweiz Deutschland Norden Österreich Liechtenstein Osten Italien Süden Frankreich Westen Bundesverfassung Schweizerischen Eidgenossenschaft Hauptstadt Bundesbehörden Regierung Parlament Bundesstadt Bern Schweiz Ausländer Schweizer Bürgerrecht Gesamtbevölkerung Bürgerrecht Migrationshintergrund Land besiedelten Ländern Europas Bevölkerung Mittelland Beckenzone Jura Alpen Grossstädte Wirtschaftszentren Zürich Genf Basel Bern Lausanne Winterthur Land teilsouveräne Kantone Bundesebene einheimischen Bevölkerung offizielle Amtssprachen Deutsch Französisch Italienisch Rätoromanisch Grundlage Landeskulturen Sprachregionen Deutschschweiz Romandie italienische rätoromanische Schweiz Landeskennzeichen lautet CH Abkürzung neutrale lateinische Confoederatio Helvetica Amtssprachen bevorzugen Schweizerische Eidgenossenschaft Urkantonen Uri Schwyz Unterwalden inoffizielles mythologisiertes Gründungsdokument Bundesbrief Bündnisurkunde Frieden Anerkennung staatsrechtlichen Unabhängigkeit Bundesstaat Schweiz Urkanton Schwyz nationale Identität Zusammenhalt Schweiz gemeinsamen Sprache Ethnie Religion interkulturellen Faktoren Glauben Demokratie regionaler Autonomie ausgeprägten Kultur Kompromissbereitschaft politischen Entscheidungsfindung Schweiz Beziehung Vorbild Staaten";
+		words = Utils.stripTags(words);
 		words = Utils.cleanString(words);
 		
 		String[] allWords = words.split(" ");
@@ -163,7 +176,11 @@ public class HLMGame extends JPanel implements Renderable, KeyListener {
 			if (word.toUpperCase().contains("WIKI")) {
 				word = "";
 			}
-		}
+		}*/
+		
+		int random = new Random().nextInt(Settings.words.size());
+		
+		String word = Settings.words.get(random);
 		
 		this.generatedWord = word.toUpperCase();
 		

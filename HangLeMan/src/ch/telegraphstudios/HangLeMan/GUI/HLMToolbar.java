@@ -18,6 +18,7 @@ public class HLMToolbar extends JPanel implements MouseListener {
 
 	private HLMButton skipButton = new HLMButton("Buttons/skip.png");
 	private HLMButton exitButton = new HLMButton("Buttons/exit.png");
+	private HLMButton settingsButton = new HLMButton("Buttons/settings.png");
 	private JLabel statsLabel = new JLabel();
 
 	//Counters
@@ -43,9 +44,13 @@ public class HLMToolbar extends JPanel implements MouseListener {
 		this.exitButton.addMouseListener(this);
 		this.add(this.exitButton);
 		
+		this.settingsButton.setBounds(TOOLBAR_HEIGHT * 2, 0, TOOLBAR_HEIGHT, TOOLBAR_HEIGHT);
+		this.settingsButton.addMouseListener(this);
+		this.add(this.settingsButton);
+		
 		this.statsLabel = new JLabel();
-		this.statsLabel.setBounds(TOOLBAR_HEIGHT * 2 + HLMGame.BORDER_DISTANCE, 0, this.getWidth() - (TOOLBAR_HEIGHT * 2) - HLMGame.BORDER_DISTANCE, TOOLBAR_HEIGHT);
-		this.statsLabel.setFont(new Font("Consolas", Font.PLAIN, 20));
+		this.statsLabel.setBounds(TOOLBAR_HEIGHT * 3 + HLMGame.BORDER_DISTANCE, 0, this.getWidth() - (TOOLBAR_HEIGHT * 3) - HLMGame.BORDER_DISTANCE, TOOLBAR_HEIGHT);
+		this.statsLabel.setFont(new Font("Consolas", Font.PLAIN, 15));
 		this.add(this.statsLabel);
 		
 		this.updateStats();
@@ -97,6 +102,14 @@ public class HLMToolbar extends JPanel implements MouseListener {
 		}
 		else if (event.getSource().equals(this.exitButton)) {
 			System.exit(0);
+		}
+		else if (event.getSource().equals(this.settingsButton)) {
+			if (this.gameInstance.settings.isVisible()) {
+				this.gameInstance.settings.setVisible(false);
+			}
+			else {
+				this.gameInstance.settings.setVisible(true);
+			}
 		}
 	}
 

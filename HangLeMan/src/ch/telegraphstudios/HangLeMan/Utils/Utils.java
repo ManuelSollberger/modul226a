@@ -88,6 +88,13 @@ public class Utils {
 	}
 	
 	public static String stripTags(String string) {
+		while (string.contains("<script>") && string.contains("</script>")) {
+			int firstIndex = string.indexOf("<script>");
+			int firstEndIndex = string.indexOf("</script>");
+			
+			string = string.substring(0, firstIndex) + string.substring(firstEndIndex + "<script>".length(), string.length() - 1);
+		}
+		
 		while (string.contains("<") && string.contains(">")) {
 			int firstIndex = string.indexOf("<");
 			int firstEndIndex = string.indexOf(">");
