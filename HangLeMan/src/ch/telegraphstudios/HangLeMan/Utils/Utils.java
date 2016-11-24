@@ -29,8 +29,6 @@ public class Utils {
 	}
 	
 	public static String cleanString(String string) {
-		int cleanStep = 1;
-		
 		String newString = "";
 		
 		for (char character : string.toCharArray()) {
@@ -40,8 +38,6 @@ public class Utils {
 			else {
 				newString += " ";
 			}
-			
-			cleanStep++;
 		}
 		
 		while (newString.contains("  ")) {
@@ -95,11 +91,23 @@ public class Utils {
 			string = string.substring(0, firstIndex) + string.substring(firstEndIndex + "<script>".length(), string.length() - 1);
 		}
 		
+		int step = 1;
+		
 		while (string.contains("<") && string.contains(">")) {
 			int firstIndex = string.indexOf("<");
 			int firstEndIndex = string.indexOf(">");
 			
-			string = string.substring(0, firstIndex) + string.substring(firstEndIndex + 1, string.length() - 1);
+			if (firstEndIndex < firstIndex) {
+				//firstEndIndex = string.substring(firstIndex).indexOf(">");
+				string = string.substring(firstEndIndex + 1);
+			}
+			else {
+				string = string.substring(0, firstIndex) + string.substring(firstEndIndex + 1, string.length() - 1);
+			}
+			
+			System.out.println("Stripping tags: " + step);
+			
+			step++;
 		}
 		
 		return string;

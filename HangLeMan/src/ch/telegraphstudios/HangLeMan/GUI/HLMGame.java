@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 
 import ch.telegraphstudios.HangLeMan.HangLeManMain;
 import ch.telegraphstudios.HangLeMan.Settings;
-import ch.telegraphstudios.HangLeMan.Utils.Utils;
 
 /**
  * This awesome swing component is responsible for the whole game
@@ -147,37 +146,9 @@ public class HLMGame extends JPanel implements Renderable, KeyListener {
 	}
 	
 	/**
-	 * Generate and clean a word.
+	 * Pick a word from the word list.
 	 */
 	private void generateWord() {
-		/*String words = "Schweiz französisch Suisse italienisch Svizzera rätoromanisch Helvetia Schweizerische Eidgenossenschaft französisch Confédération suisse italienisch Confederazione Svizzera, rätoromanisch Confederaziun svizra lateinisch Confoederatio Helvetica föderalistischer demokratischer Staat Europa deutsche französische italienische rätoromanische Kulturgebiete Willensnation zusammenleben Schweiz Deutschland Norden Österreich Liechtenstein Osten Italien Süden Frankreich Westen Bundesverfassung Schweizerischen Eidgenossenschaft Hauptstadt Bundesbehörden Regierung Parlament Bundesstadt Bern Schweiz Ausländer Schweizer Bürgerrecht Gesamtbevölkerung Bürgerrecht Migrationshintergrund Land besiedelten Ländern Europas Bevölkerung Mittelland Beckenzone Jura Alpen Grossstädte Wirtschaftszentren Zürich Genf Basel Bern Lausanne Winterthur Land teilsouveräne Kantone Bundesebene einheimischen Bevölkerung offizielle Amtssprachen Deutsch Französisch Italienisch Rätoromanisch Grundlage Landeskulturen Sprachregionen Deutschschweiz Romandie italienische rätoromanische Schweiz Landeskennzeichen lautet CH Abkürzung neutrale lateinische Confoederatio Helvetica Amtssprachen bevorzugen Schweizerische Eidgenossenschaft Urkantonen Uri Schwyz Unterwalden inoffizielles mythologisiertes Gründungsdokument Bundesbrief Bündnisurkunde Frieden Anerkennung staatsrechtlichen Unabhängigkeit Bundesstaat Schweiz Urkanton Schwyz nationale Identität Zusammenhalt Schweiz gemeinsamen Sprache Ethnie Religion interkulturellen Faktoren Glauben Demokratie regionaler Autonomie ausgeprägten Kultur Kompromissbereitschaft politischen Entscheidungsfindung Schweiz Beziehung Vorbild Staaten";
-		words = Utils.stripTags(words);
-		words = Utils.cleanString(words);
-		
-		String[] allWords = words.split(" ");
-		
-		String word = "";
-		
-		while (word == "") {
-			int random = new Random().nextInt(allWords.length - 1);
-			
-			word = allWords[random];
-			
-			if (word.length() < MIN_WORD_SIZE || word.length() > MAX_WORD_SIZE) {
-				word = "";
-			}
-			
-			//Filter out these words of the javascript stuff.
-			if (word.toUpperCase().startsWith("WG")) {
-				word = "";
-			}
-			
-			//Don't use the wikipedia stuff.
-			if (word.toUpperCase().contains("WIKI")) {
-				word = "";
-			}
-		}*/
-		
 		int random = new Random().nextInt(Settings.words.size());
 		
 		String word = Settings.words.get(random);

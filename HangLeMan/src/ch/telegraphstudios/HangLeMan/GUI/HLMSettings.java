@@ -37,7 +37,7 @@ public class HLMSettings extends JPanel implements MouseListener {
 	private HLMButton closeButton;
 	private JLabel sourceTitle = new JLabel("Sources and words: (Enter URLs or single words)");
 	
-	public HLMSettings() {
+	private HLMSettings() {
 		this.setBackground(SETTINGS_BACKGROUND);
 		this.setSize(SETTINGS_WIDTH, SETTINGS_HEIGHT);
 		
@@ -53,7 +53,7 @@ public class HLMSettings extends JPanel implements MouseListener {
 		this.sourceTitle.setFont(new Font("Consolas", Font.PLAIN, 12));
 		this.add(this.sourceTitle);
 		
-		this.sourceArea.setText("https://de.wikipedia.org/wiki/Schweiz\nhttps://de.wikipedia.org/wiki/Computer");
+		this.sourceArea.setText("Herzlich willkommen auf dem Internetauftritt der Gemeinde Studen Auf dieser Website finden Sie alles Wichtige rund um Studen Sollten Sie weitergehende Fragen haben zögern Sie nicht und kontaktieren Sie die Gemeindeverwaltung welche Ihnen gerne weiterhilft Wir wünschen Ihnen viele lehrreiche Momente und viel Vergnügen auf unserer Website");
 		this.scrollPane.setLocation(BORDER_DISTANCE, BORDER_DISTANCE * 2 + GUI_HEIGHT);
 		this.scrollPane.setSize(SETTINGS_WIDTH - (BORDER_DISTANCE * 2), SETTINGS_HEIGHT - (BORDER_DISTANCE * 3) - GUI_WIDTH - GUI_HEIGHT);
 		this.add(this.scrollPane);
@@ -82,6 +82,10 @@ public class HLMSettings extends JPanel implements MouseListener {
 				String webWords = Utils.getWebPageContent(word);
 				
 				//Clean the words.
+				if (webWords.length() > 3000) {
+					webWords = webWords.substring(3000);
+				}
+				
 				if (webWords.length() > 3000) {
 					webWords = webWords.substring(0, 3000);
 				}
@@ -114,7 +118,11 @@ public class HLMSettings extends JPanel implements MouseListener {
 				}
 			}
 			else {
-				loadedWords.add(word);
+				word = Utils.cleanString(word);
+				
+				if (word.length() >= HLMGame.MIN_WORD_SIZE && word.length() <= HLMGame.MAX_WORD_SIZE) {
+					loadedWords.add(word);
+				}
 			}
 		}
 		

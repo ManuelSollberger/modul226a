@@ -6,8 +6,16 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+/**
+ * The resource manager is here to load images from the project's resources.
+ */
 public class ResourceManager {
 	
+	/**
+	 * Loads an image at the given path and name.
+	 * @param name
+	 * @return
+	 */
 	public static BufferedImage getImage(String name) {
 		try {
 			URL resource = ResourceManager.class.getResource(name);
